@@ -1,0 +1,16 @@
+{
+  "name": "cse-19-bot",
+  "version": "1.0.0",
+  "description": "A bot for BUET CSE 19 discord server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Siam11651",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "node-fetch": "^2.6.1",
+    "prompt": "^1.1.0"
+  }
+}
