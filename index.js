@@ -16,6 +16,7 @@ prompt.get(["DISCORD_BOT_TOKEN", "TENOR_API_KEY", "PIXABAY_API_KEY", "YOUTUBE_AP
         PIXABAY_API_KEY = result.PIXABAY_API_KEY;
         YOUTUBE_API_KEY = result.YOUTUBE_API_KEY;
 
+        console.clear();
         console.log("Starting...");
         client.login(DISCORD_BOT_TOKEN);
     }
