@@ -2,7 +2,7 @@
   "name": "cse-19-bot",
   "version": "1.0.0",
   "description": "A bot for BUET CSE 19 discord server",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

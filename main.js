@@ -75,7 +75,7 @@ async function GetImg(message, query)
     }
     else
     {
-        let index = Math.floor(Math.random() * json.hits.length);
+        let index = Math.floor(Math.random() * hits.length);
 
         message.channel.send(json.hits[index].webformatURL);
     }
@@ -95,6 +95,33 @@ async function GetVideo(message, query)
     else
     {
         message.channel.send("https://www.youtube.com/watch?v=" + items[0].id.videoId);
+    }
+}
+
+async function GetDadJoke(message, query)
+{
+    let url = "https://icanhazdadjoke.com/search?term=" + query + "&limit=3";
+    
+    let response = await fetch(url, 
+    {
+        headers:
+        {
+            "Accept": "application/json"
+        }
+    });
+
+    let json = await response.json();
+    let results = json.results;
+
+    if(results.length === 0)
+    {
+        message.channel.send("Nothing found on your query 🥺.");
+    }
+    else
+    {
+        let index = Math.floor(Math.random() * results.length);
+
+        message.channel.send(json.results[index].joke);
     }
 }
 
@@ -118,7 +145,8 @@ client.on("message", (message)=>
             message.channel.send("Commands:\n" +
             "./gif to show gifs\n" + 
             "./img to show images\n" + 
-            "./play to play YouTube video");
+            "./play to play YouTube video\n" + 
+            "./dadjoke for a dadjoke 👀");
         }
         else if(tokens[0].toLocaleLowerCase() === "./gif")
         {
@@ -130,7 +158,7 @@ client.on("message", (message)=>
             }
             else
             {
-                message.channel.send("Please add keywords to search GIF.");
+                message.channel.send("Please add search terms to search GIF.");
             }
         }
         else if(tokens[0].toLocaleLowerCase() === "./img")
@@ -143,7 +171,7 @@ client.on("message", (message)=>
             }
             else
             {
-                message.channel.send("Please add keywords to search images.");
+                message.channel.send("Please add search terms to search images.");
             }
         }
         else if(tokens[0].toLocaleLowerCase() === "./play")
@@ -156,7 +184,20 @@ client.on("message", (message)=>
             }
             else
             {
-                message.channel.send("Please add keywords to play..");
+                message.channel.send("Please add search terms to play.");
+            }
+        }
+        else if(tokens[0].toLocaleLowerCase() === "./dadjoke")
+        {
+            if(tokens.length > 1)
+            {
+                let query = GetQuery(tokens);
+
+                GetDadJoke(message, query);
+            }
+            else
+            {
+                message.channel.send("Please add search terms for dad jokes");
             }
         }
     }
