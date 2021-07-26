@@ -115,7 +115,10 @@ client.on("message", (message)=>
         }
         else if(tokens[0].toLowerCase() === "./hemlp")
         {
-            message.channel.send("You shall be hemlped my child.");
+            message.channel.send("Commands:\n" +
+            "./gif to show gifs\n" + 
+            "./img to show images\n" + 
+            "./play to play YouTube video");
         }
         else if(tokens[0].toLocaleLowerCase() === "./gif")
         {
