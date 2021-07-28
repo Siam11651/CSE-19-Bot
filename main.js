@@ -1,30 +1,19 @@
-const prompt = require("prompt");
-
-var DISCORD_BOT_TOKEN;
-var TENOR_API_KEY;
-var PIXABAY_API_KEY;
-var YOUTUBE_API_KEY;
-
-prompt.start();
-
-prompt.get(["DISCORD_BOT_TOKEN", "TENOR_API_KEY", "PIXABAY_API_KEY", "YOUTUBE_API_KEY"], (error, result)=>
-{
-    if(!error)
-    {
-        DISCORD_BOT_TOKEN = result.DISCORD_BOT_TOKEN;
-        TENOR_API_KEY = result.TENOR_API_KEY;
-        PIXABAY_API_KEY = result.PIXABAY_API_KEY;
-        YOUTUBE_API_KEY = result.YOUTUBE_API_KEY;
-
-        console.clear();
-        console.log("Starting...");
-        client.login(DISCORD_BOT_TOKEN);
-    }
-});
-
+const dotenv = require("dotenv").config();
 const fetch = require("node-fetch");
 const Discord = require("discord.js");
 const client = new Discord.Client();
+
+if(dotenv.error)
+{
+    console.log("cannot find a dotenv file. Exiting...");
+
+    process.exit(0);
+}
+
+const DISCORD_BOT_TOKEN = dotenv.parsed.DISCORD_BOT_TOKEN;
+const TENOR_API_KEY = dotenv.parsed.TENOR_API_KEY;
+const PIXABAY_API_KEY = dotenv.parsed.PIXABAY_API_KEY;
+const YOUTUBE_API_KEY = dotenv.parsed.YOUTUBE_API_KEY;
 
 function GetQuery(tokens)
 {
@@ -202,3 +191,6 @@ client.on("message", (message)=>
         }
     }
 });
+
+console.log("Starting...");
+client.login(DISCORD_BOT_TOKEN);
