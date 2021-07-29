@@ -114,6 +114,24 @@ async function GetDadJoke(message, query)
     }
 }
 
+async function GetMeme(message)
+{
+    let response = await fetch("https://api.pushshift.io/reddit/search/submission/?subreddit=memes&over_18=false&size=500");
+    let json = await response.json();
+    let data = json.data;
+    
+    if(data.length === 0)
+    {
+        message.channel.send("No memes now. 🥺");
+    }
+    else
+    {
+        let index = Math.floor(Math.random() * data.length);
+
+        message.channel.send(data[index].url);
+    }
+}
+
 client.on("ready", ()=>
 {
     console.log("Client Ready");
@@ -135,7 +153,8 @@ client.on("message", (message)=>
             "./gif to show gifs\n" + 
             "./img to show images\n" + 
             "./play to play YouTube video\n" + 
-            "./dadjoke for a dadjoke 👀");
+            "./dadjoke for a dadjoke 👀\n" + 
+            "./meme for a meme from r/memes");
         }
         else if(tokens[0].toLocaleLowerCase() === "./gif")
         {
@@ -188,6 +207,10 @@ client.on("message", (message)=>
             {
                 message.channel.send("Please add search terms for dad jokes");
             }
+        }
+        else if(tokens[0].toLocaleLowerCase() === "./meme")
+        {
+            GetMeme(message);
         }
     }
 });
