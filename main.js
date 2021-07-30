@@ -1,5 +1,6 @@
 const dotenv = require("dotenv").config();
 const fetch = require("node-fetch");
+const gis = require("g-i-s");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
@@ -12,9 +13,11 @@ if(dotenv.error)
 
 const DISCORD_BOT_TOKEN = dotenv.parsed.DISCORD_BOT_TOKEN;
 const TENOR_API_KEY = dotenv.parsed.TENOR_API_KEY;
-const PIXABAY_API_KEY = dotenv.parsed.PIXABAY_API_KEY;
 const YOUTUBE_API_KEY = dotenv.parsed.YOUTUBE_API_KEY;
 
+/**
+ * @param {string[]} tokens
+ */
 function GetQuery(tokens)
 {
     let query = "";
@@ -32,6 +35,10 @@ function GetQuery(tokens)
     return encodeURIComponent(query);
 }
 
+/**
+ * @param {Discord.Message} message
+ * @param {string} query
+ */
 async function GetGif(message, query)
 {
     let url = "https://g.tenor.com/v1/search?q=" + query + "&key=" + TENOR_API_KEY + "&limit=50&contentfilter=high&media_filter=minimal&locale=en_US";
@@ -51,25 +58,41 @@ async function GetGif(message, query)
     }
 }
 
-async function GetImg(message, query)
-{
-    let url = "https://pixabay.com/api/?key=" + PIXABAY_API_KEY + "&q=" + query + "&lang=en&image_type=photo&safesearch=true&order=latest&per_page=200&pretty=true";
-    let response = await fetch(url);
-    let json = await response.json();
-    let hits = json.hits;
-
-    if(hits.length === 0)
+/**
+ * @param {Discord.Message} message
+ * @param {string} query
+ */
+ async function GetImg(message, query)
+ {
+    gis(query, (error, results)=>
     {
-        message.channel.send("Nothing found on your query 🥺.");
-    }
-    else
-    {
-        let index = Math.floor(Math.random() * hits.length);
+        if(error)
+        {
+            console.log(error);
+        }
+        else
+        {
+            if(results.length === 0)
+            {
+                message.channel.send("Nothing found on your query 🥺.");
+            }
+            else
+            {
+                let index = Math.floor(Math.random() * results.length);
 
-        message.channel.send(json.hits[index].webformatURL);
-    }
-}
+                /** @type {string}*/
+                let url = results[index].url;
 
+                message.channel.send(url);
+            }
+        }
+    });
+ }
+
+ /**
+ * @param {Discord.Message} message
+ * @param {string} query
+ */
 async function GetVideo(message, query)
 {
     let url = "https://youtube.googleapis.com/youtube/v3/search?part=id&part=snippet&q=" + query + "&safeSearch=strict&key=" + YOUTUBE_API_KEY;
@@ -87,6 +110,10 @@ async function GetVideo(message, query)
     }
 }
 
+/**
+ * @param {Discord.Message} message
+ * @param {string} query
+ */
 async function GetDadJoke(message, query)
 {
     let url = "https://icanhazdadjoke.com/search?term=" + query + "&limit=3";
@@ -114,6 +141,9 @@ async function GetDadJoke(message, query)
     }
 }
 
+/**
+ * @param {Discord.Message} message
+ */
 async function GetMeme(message)
 {
     let response = await fetch("https://api.pushshift.io/reddit/search/submission/?subreddit=memes&over_18=false&size=500");

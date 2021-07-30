@@ -7,7 +7,6 @@
  ```
  DISCORD_BOT_TOKEN=HaBiJhAbI
  TENOR_API_KEY=HaBiJhAbI
- PIXABAY_API_KEY=HaBiJhAbI
  YOUTUBE_API_KEY=HaBiJhAbI
  ```
  Replace "HaBiJhAbI" with token or API key
