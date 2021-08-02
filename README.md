@@ -17,4 +17,5 @@
 **Build Commands:**
 - git clone https://github.com/Siam11651/CSE-19-Bot.git
 - cd CSE-19-Bot
+- npm install
 - npm run build
