@@ -6,7 +6,7 @@
   "scripts":
   {
     "start": "node main.js",
-    "publish": "pkg . --out-path bin"
+    "build": "pkg . --out-path bin"
   },
   "bin": "main.js",
   "author": "Siam11651",
