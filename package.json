@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "A bot for BUET CSE 19 discord server",
   "main": "main.js",
-  "scripts": {
-    "start": "node main.js"
+  "scripts":
+  {
+    "start": "node main.js",
+    "publish": "pkg . --out-path bin"
   },
+  "bin": "main.js",
   "author": "Siam11651",
   "license": "ISC",
-  "dependencies": {
+  "dependencies":
+  {
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "g-i-s": "^2.1.6",
